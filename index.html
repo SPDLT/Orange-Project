@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: ภาพรวมโครงการกลุ่มสีส้ม</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+    <!--
+    Narrative & Structure Plan:
+    1. Header: Main title of the infographic.
+    2. Overall Summary: A section with key metrics (total projects) and a donut chart visualizing the overall status distribution (All On Track).
+    3. Project Details Grid: A responsive grid layout displaying each of the 3 projects in individual "Material Design" cards.
+    4. Card Content: Each card will contain the project title, a clear status badge with an icon, the reason for the status, and the proposed actions.
+    5. Color Palette: Vibrant Orange Theme - #E65100 (Deep Orange 900 - main headers), #FB8C00 (Orange 600 - accents), #FFB74D (Orange 300 - light accents/chart), #FFF3E0 (Orange 50 - background), #FFF8E1 (Amber 50 - status background), #FF8F00 (Amber 800 - status text), #FFD54F (Amber 300 - status border).
+    6. Typography: 'Sarabun' for Thai language readability.
+
+    Visualization Selection:
+    1. Data: Project Status Distribution (3 On Track).
+       - Goal: Inform/Compare.
+       - Visualization: Donut Chart (Chart.js).
+       - Justification: Best for showing part-to-whole relationships clearly and engagingly. NO SVG required.
+    2. Data: Project Details (Reasons & Proposals).
+       - Goal: Organize/Inform.
+       - Visualization: Structured HTML lists (`<ul>`) with Tailwind styling.
+       - Justification: Best for presenting qualitative text information clearly. NO SVG, NO Mermaid JS required.
+
+    Confirmation: NEITHER Mermaid JS NOR SVG were used in this output. All charts are rendered on Canvas via Chart.js and diagrams are built with structured HTML/CSS.
+    -->
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #FFF3E0; 
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        .card-gradient {
+            background-image: linear-gradient(to top right, #FFFFFF, #FFFBEB);
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        .status-on-track {
+            background-color: #FFF8E1; 
+            color: #FF8F00; 
+            border: 1px solid #FFD54F; 
+        }
+    </style>
+</head>
+<body class="bg-amber-50 text-slate-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#E65100]">ภาพรวมโครงการกลุ่มสีส้ม</h1>
+            <p class="text-lg text-amber-800 mt-2">สรุปความคืบหน้า ปัญหา และข้อเสนอแนะสำหรับโครงการที่ตามแผน</p>
+        </header>
+
+        <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="text-center md:text-left">
+                    <h2 class="text-2xl font-bold text-[#E65100] mb-4">สรุปภาพรวม</h2>
+                    <div class="flex justify-center md:justify-start space-x-8">
+                        <div class="text-center">
+                            <p class="text-5xl font-bold text-[#E65100]">3</p>
+                            <p class="text-amber-700">โครงการทั้งหมด</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-5xl font-bold text-[#FB8C00]">3</p>
+                            <p class="text-amber-700">ตามแผน</p>
+                        </div>
+                    </div>
+                     <p class="mt-6 text-amber-800">โครงการทั้ง 3 ในชุดนี้มีความคืบหน้าตามแผนที่วางไว้ ซึ่งเป็นสัญญาณที่ดี แต่ยังคงต้องการการติดตามอย่างใกล้ชิดเพื่อรักษาระดับความก้าวหน้า</p>
+                </div>
+                <div>
+                    <div class="chart-container">
+                        <canvas id="statusChartV3"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            
+            <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col card-gradient transition-transform transform hover:scale-105 hover:shadow-2xl">
+                <h3 class="text-xl font-bold text-[#E65100] mb-3">กำหนดหลักเกณฑ์การแก้ไขเพิ่มเติม/เปลี่ยนแปลงสภาพตัวถังรถโดยสาร</h3>
+                <div class="mb-4">
+                    <span class="status-badge status-on-track">
+                        <span class="mr-2">✅</span>ตามแผน
+                    </span>
+                </div>
+                <div class="text-sm space-y-3 flex-grow">
+                    <p><strong class="text-amber-900">สาเหตุ:</strong> อยู่ระหว่างเปิดรับฟังความคิดเห็นร่างประกาศฯ ผ่านเว็บไซต์ (29 พ.ค. - 12 มิ.ย. 68)</p>
+                    <p class="text-amber-700 italic">อาจใช้เวลาในการทบทวนร่างประกาศฯ มากกว่าแผนที่กำหนดไว้</p>
+                    <div>
+                        <strong class="text-amber-900">ข้อเสนอ:</strong>
+                        <ul class="list-disc list-inside text-amber-800 mt-1 pl-2">
+                            <li>สนว. เริ่มต้นรวบรวมและจัดกลุ่มความคิดเห็นอย่างต่อเนื่อง</li>
+                            <li>จัดทำร่างข้อสรุปและแนวทางการปรับปรุงแก้ไขควบคู่กันไป</li>
+                            <li>เพื่อให้สรุปผลและปรับปรุงร่างประกาศฯ ได้ทันทีหลังสิ้นสุดกระบวนการ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col card-gradient transition-transform transform hover:scale-105 hover:shadow-2xl">
+                <h3 class="text-xl font-bold text-[#E65100] mb-3">กำหนดเงื่อนไขอายุรถโดยสารไม่ประจำทางด้วยการตรวจสอบ NDT</h3>
+                <div class="mb-4">
+                    <span class="status-badge status-on-track">
+                        <span class="mr-2">✅</span>ตามแผน
+                    </span>
+                </div>
+                <div class="text-sm space-y-3 flex-grow">
+                    <p><strong class="text-amber-900">สาเหตุ:</strong> อยู่ระหว่างจัดทำคู่มือและหลักสูตรการตรวจสอบ NDT ร่วมกับ MTEC</p>
+                    <p class="text-amber-700 italic">จะต้องมีกระบวนการประชุมรับฟังความคิดเห็นต่อผู้มีส่วนได้ส่วนเสีย ซึ่งอาจจะใช้เวลามากกว่าแผน</p>
+                    <div>
+                        <strong class="text-amber-900">ข้อเสนอ:</strong>
+                        <ul class="list-disc list-inside text-amber-800 mt-1 pl-2">
+                            <li>สนว. กำหนดเป้าหมายร่วมกับ MTEC และเตรียมการรับฟังความเห็น</li>
+                            <li>วางแผนกระบวนการรับฟังความคิดเห็นล่วงหน้าให้มีประสิทธิภาพ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col card-gradient transition-transform transform hover:scale-105 hover:shadow-2xl">
+                <h3 class="text-xl font-bold text-[#E65100] mb-3">กำหนดมาตรการด้านภาษีประจำปีเพื่อสนับสนุนยานยนต์ปลอดภัยและเป็นมิตรต่อสิ่งแวดล้อม</h3>
+                <div class="mb-4">
+                    <span class="status-badge status-on-track">
+                        <span class="mr-2">✅</span>ตามแผน
+                    </span>
+                </div>
+                <div class="text-sm space-y-3 flex-grow">
+                    <p><strong class="text-amber-900">สาเหตุ:</strong> ร่าง พ.ร.บ. ถูกส่งจาก คค. ไปยังสำนักเลขาธิการคณะรัฐมนตรีแล้ว และอยู่ระหว่างการพิจารณาของคณะรัฐมนตรี</p>
+                    <p class="text-amber-700 italic">เป็นปัจจัยภายนอกที่สำคัญและอาจเป็นคอขวดได้</p>
+                    <div>
+                        <strong class="text-amber-900">ข้อเสนอ:</strong>
+                        <ul class="list-disc list-inside text-amber-800 mt-1 pl-2">
+                            <li>สนก. และ สนท. ติดตามและสนับสนุนข้อมูลอย่างทันท่วงที</li>
+                            <li>เพื่อสนับสนุนการพิจารณาของคณะรัฐมนตรี</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function wrapLabels(label, maxWidth) {
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if (currentLine.length + words[i].length + 1 < maxWidth) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        const ctxV3 = document.getElementById('statusChartV3').getContext('2d');
+        const statusChartV3 = new Chart(ctxV3, {
+            type: 'doughnut',
+            data: {
+                labels: ['ตามแผน', 'อื่นๆ'],
+                datasets: [{
+                    label: 'สถานะโครงการ',
+                    data: [3, 0],
+                    backgroundColor: [
+                        '#FB8C00', /* Orange 600 */
+                        '#FFB74D' /* Orange 300 (for 'อื่นๆ' if needed, though currently 0) */
+                    ],
+                    borderColor: [
+                        '#FFFFFF',
+                        '#FFFFFF'
+                    ],
+                    borderWidth: 4,
+                    hoverOffset: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                family: 'Sarabun',
+                                size: 14,
+                                weight: '600'
+                            },
+                            color: '#475569', /* Still using a neutral color for legend labels for readability */
+                            padding: 20
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        },
+                        titleFont: {
+                            family: 'Sarabun',
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            family: 'Sarabun'
+                        },
+                        padding: 10,
+                        boxPadding: 4,
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
